@@ -21,11 +21,23 @@ function buildGrid(size)
             gridEntry.classList.add("grid-entry");
             gridEntry.addEventListener("mouseover", (e) => { 
                 if (e.buttons == 1) {
-                    e.target.style.backgroundColor = currentColor;
+                    setGridColor(e.target);
                 }});
             rows.appendChild(gridEntry);
         }
         wrapper.appendChild(rows);
+    }
+}
+
+function setGridColor(gridEntry)
+{
+    if (document.querySelector('.toggle-checkbox').checked)
+    {
+        gridEntry.style.backgroundColor = '#' + Math.floor(Math.random()*0xFFFFFF).toString(16);
+    }
+    else
+    {
+        gridEntry.style.backgroundColor = currentColor
     }
 }
 
@@ -49,8 +61,20 @@ function start()
 
     document.querySelector(".clear").addEventListener("click", () => clearGrid());
     
-    colorInput = document.querySelector("input[type='color']");
-    colorInput.onchange = () => (currentColor = colorInput.value)
+    const colorInput = document.querySelector("input[type='color']");
+    colorInput.onchange = () => (currentColor = colorInput.value);
+
+    rainbowCheckbox = document.querySelector('.toggle-checkbox');
+    rainbowCheckbox.onchange = () => {
+        if (rainbowCheckbox.checked)
+        {
+            document.querySelector('.color-pick').classList.add('remove_display');
+        }
+        else
+        {
+            document.querySelector('.color-pick').classList.remove('remove_display');
+        }
+    }
 }
 
 start()
